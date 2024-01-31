@@ -10,11 +10,17 @@
  * @version: Jan 2023
  */
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferStrategy;
 public class Square {
 
     private String marker;
+    private TicTacToeViewer back;
+    private Image x, o;
     private int row;
     private int col;
+    private static final int BRUSH_THICKNESS = 5;
     private boolean isWinningSquare;
 
     /**
@@ -23,9 +29,12 @@ public class Square {
      * @param row the row the square is in
      * @param col the column the square is in
      */
-    public Square(int row, int col) {
+    public Square(int row, int col, TicTacToeViewer back) {
+        this.back = back;
         this.row = row;
         this.col = col;
+        this.x = new ImageIcon("Resources/X.png").getImage();
+        this.o = new ImageIcon("Resources/O.png").getImage();
 
         this.marker = TicTacToe.BLANK;
         this.isWinningSquare = false;
@@ -50,6 +59,34 @@ public class Square {
      */
     public boolean isEmpty() {
         return this.marker.equals(TicTacToe.BLANK);
+    }
+
+    public void draw(Graphics g, int sideLength, int x_padding, int y_padding) {
+        // Note: Idea and method to increase the thickness of line was taken from Edwin Buck on Stack Overflow
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(BRUSH_THICKNESS));
+        //
+        if (isWinningSquare) {
+            g2.setColor(Color.GREEN);
+            g2.fillRect(x_padding + col * sideLength, y_padding + row * sideLength, sideLength, sideLength);
+        }
+
+        g2.setColor(Color.RED);
+        g2.drawRect(x_padding + col * sideLength, y_padding + row * sideLength, sideLength, sideLength);
+
+        switch (marker) {
+            case "X":
+                g.drawImage(x, x_padding + col * sideLength, y_padding + row * sideLength, sideLength, sideLength, back);
+                break;
+            case "O":
+                g.drawImage(o, x_padding + col * sideLength, y_padding + row * sideLength, sideLength, sideLength, back);
+                break;
+            case "-":
+                // Leave square empty
+                break;
+            default:
+                System.out.println("Something went horribly wrong");
+        }
     }
 
     /**

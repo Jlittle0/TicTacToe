@@ -10,6 +10,7 @@
  * @version: Jan 2023
  */
 
+import java.awt.event.ActionEvent;
 import java.util.Scanner;
 
 public class TicTacToe
@@ -34,6 +35,7 @@ public class TicTacToe
 
     private Square[][] board;
     private boolean isGameOver;
+    private TicTacToeViewer window;
 
     /**
      * Constructor which initialized the board with BLANKs.
@@ -46,7 +48,7 @@ public class TicTacToe
         this.board = new Square[3][3];
         for(int row = 0; row < this.board.length; row++) {
             for(int col = 0; col< this.board[row].length; col++) {
-                this.board[row][col] = new Square(row, col);
+                this.board[row][col] = new Square(row, col, window);
             }
         }
 
@@ -56,7 +58,9 @@ public class TicTacToe
         this.winner = BLANK;
         this.winIndex = -1;
         this.winDirection = -1;
+        window = new TicTacToeViewer(this);
     }
+
 
     /******************** Methods You May Find Helpful ********************/
     public Square[][] getBoard() {
@@ -116,6 +120,7 @@ public class TicTacToe
             int col = input.nextInt();
             if(this.pickLocation(row, col)) {
                 this.takeTurn(row, col);
+                window.repaint();
             } else {
                 System.out.println("That space is taken, or you entered an invalid row/col");
             }
