@@ -65,15 +65,18 @@ public class Square {
         // Note: Idea and method to increase the thickness of line was taken from Edwin Buck on Stack Overflow
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(BRUSH_THICKNESS));
-        //
+
+        // Checks for the winning square and paints the squares green if a player has won.
         if (isWinningSquare) {
             g2.setColor(Color.GREEN);
             g2.fillRect(x_padding + col * sideLength, y_padding + row * sideLength, sideLength, sideLength);
         }
 
+        // Draws the outline of the board (the squares)
         g2.setColor(Color.RED);
         g2.drawRect(x_padding + col * sideLength, y_padding + row * sideLength, sideLength, sideLength);
 
+        // Uses a switch statement to draw the correct image in each square
         switch (marker) {
             case "X":
                 g.drawImage(x, x_padding + col * sideLength, y_padding + row * sideLength, sideLength, sideLength, back);

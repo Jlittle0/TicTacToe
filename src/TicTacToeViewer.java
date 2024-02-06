@@ -9,7 +9,9 @@ public class TicTacToeViewer extends JFrame {
                              SIDE_LENGTHS = 50,
                              TITLE_BAR_HEIGHT = 22,
                              X_PADDING = WINDOW_WIDTH / 2 - SIDE_LENGTHS * 3 / 2,
-                             Y_PADDING = WINDOW_HEIGHT / 2 - SIDE_LENGTHS * 3 / 2 - TITLE_BAR_HEIGHT;
+                             Y_PADDING = WINDOW_HEIGHT / 2 - SIDE_LENGTHS * 3 / 2 - TITLE_BAR_HEIGHT,
+                             BRUSH_PADDING_Y = 15,
+                             BRUSH_PADDING_X = 5;
     private static final String TITLE = "Tic-Tac-Toe";
     private TicTacToe t;
     private Image background;
@@ -41,6 +43,12 @@ public class TicTacToeViewer extends JFrame {
                 t.getBoard()[i][j].draw(g, SIDE_LENGTHS, X_PADDING, Y_PADDING);
             }
         }
+        g.drawString("0", X_PADDING + SIDE_LENGTHS / 2 - BRUSH_PADDING_X, Y_PADDING - BRUSH_PADDING_X);
+        g.drawString("1", X_PADDING + 3 * SIDE_LENGTHS / 2 - BRUSH_PADDING_X, Y_PADDING - BRUSH_PADDING_X);
+        g.drawString("2", X_PADDING + 5 * SIDE_LENGTHS / 2 - BRUSH_PADDING_X, Y_PADDING - BRUSH_PADDING_X);
+        g.drawString("0", X_PADDING - BRUSH_PADDING_Y, Y_PADDING + SIDE_LENGTHS / 2 + BRUSH_PADDING_X);
+        g.drawString("1", X_PADDING - BRUSH_PADDING_Y, Y_PADDING + 3 * SIDE_LENGTHS / 2 + BRUSH_PADDING_X);
+        g.drawString("2", X_PADDING - BRUSH_PADDING_Y, Y_PADDING + 5 * SIDE_LENGTHS / 2 + BRUSH_PADDING_X);
     }
 
 }
