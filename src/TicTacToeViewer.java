@@ -34,8 +34,14 @@ public class TicTacToeViewer extends JFrame {
     }
 
     public void paint(Graphics g) {
+        // Increasing font size so that the numbers are more visible
+        Font stringFont = new Font( "SansSerif", Font.PLAIN, 25 );
+        g.setFont(stringFont);
+
+        // Clear the screen by drawing a white rectangle over everything
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+        // Paint the background based on image resource file
         g.drawImage(background, 0 ,0, WINDOW_WIDTH, WINDOW_HEIGHT,  this);
         // Draws the board
         for (int i = 0; i < t.getBoard().length; i++) {
@@ -43,12 +49,29 @@ public class TicTacToeViewer extends JFrame {
                 t.getBoard()[i][j].draw(g, SIDE_LENGTHS, X_PADDING, Y_PADDING);
             }
         }
+        // Put all the numbers on the side of the board to indicate which indicies correspond to each square
         g.drawString("0", X_PADDING + SIDE_LENGTHS / 2 - BRUSH_PADDING_X, Y_PADDING - BRUSH_PADDING_X);
         g.drawString("1", X_PADDING + 3 * SIDE_LENGTHS / 2 - BRUSH_PADDING_X, Y_PADDING - BRUSH_PADDING_X);
         g.drawString("2", X_PADDING + 5 * SIDE_LENGTHS / 2 - BRUSH_PADDING_X, Y_PADDING - BRUSH_PADDING_X);
-        g.drawString("0", X_PADDING - BRUSH_PADDING_Y, Y_PADDING + SIDE_LENGTHS / 2 + BRUSH_PADDING_X);
-        g.drawString("1", X_PADDING - BRUSH_PADDING_Y, Y_PADDING + 3 * SIDE_LENGTHS / 2 + BRUSH_PADDING_X);
-        g.drawString("2", X_PADDING - BRUSH_PADDING_Y, Y_PADDING + 5 * SIDE_LENGTHS / 2 + BRUSH_PADDING_X);
+        g.drawString("0", X_PADDING - BRUSH_PADDING_Y * 3 / 2, Y_PADDING + SIDE_LENGTHS / 2 + BRUSH_PADDING_X * 2);
+        g.drawString("1", X_PADDING - BRUSH_PADDING_Y * 3 / 2, Y_PADDING + 3 * SIDE_LENGTHS / 2 + BRUSH_PADDING_X * 2);
+        g.drawString("2", X_PADDING - BRUSH_PADDING_Y * 3 / 2, Y_PADDING + 5 * SIDE_LENGTHS / 2 + BRUSH_PADDING_X * 2);
+        // Check if the game is over and print the ending message accordingly
+        switch (t.getWinner()) {
+            case "X":
+                g.drawString("X Wins!", WINDOW_WIDTH / 2 - BRUSH_PADDING_Y, WINDOW_HEIGHT / 2 + SIDE_LENGTHS * 3 / 2 + BRUSH_PADDING_Y);
+                break;
+            case "O":
+                g.drawString("O Wins!", WINDOW_WIDTH / 2 - BRUSH_PADDING_Y, WINDOW_HEIGHT / 2 + SIDE_LENGTHS * 3 / 2 + BRUSH_PADDING_Y);
+                break;
+            case "-":
+                if (t.getGameOver()) {
+                    g.drawString("Game ends in a tie!", WINDOW_WIDTH / 2 - BRUSH_PADDING_Y * 2, WINDOW_HEIGHT / 2 + SIDE_LENGTHS * 3 / 2 + BRUSH_PADDING_Y);
+                }
+                break;
+            default:
+                System.out.println("Something wrong");
+        }
     }
 
 }
